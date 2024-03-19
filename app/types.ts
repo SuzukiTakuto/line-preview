@@ -13,3 +13,7 @@ export type LogType = {
   message?: MessageType;
   date?: DateType;
 };
+
+export type HeaderType = {
+  dates: string[];
+};
