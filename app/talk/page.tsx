@@ -2,15 +2,22 @@
 
 import React from "react";
 import { useSetRecoilState, useRecoilValue } from "recoil";
-import { logState } from "../atoms";
+import { logState, opponentState } from "../atoms";
+import { useRouter } from "next/navigation";
 import Message from "../components/message/Message";
 import Date from "../components/date/Date";
 
 const TalkPage = () => {
+  const router = useRouter();
   const log = useRecoilValue(logState);
+  const opponentName = useRecoilValue(opponentState);
+
+  if (opponentName === "" || log.length === 0) {
+    router.push("/");
+  }
   return (
     <>
-      <div className="">
+      <div className="mt-16">
         {log.map((log, index) => {
           if (log.type === "message") {
             return (
