@@ -1,13 +1,18 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 
 import { MessageType } from "@/app/types";
+import { useRecoilValue } from "recoil";
+import { logState, opponentState } from "../../atoms";
 
 const Message = (props: MessageType) => {
   const { content, user, timestamp } = props;
+  const opponentName = useRecoilValue(opponentState);
   return (
     <div className="py-2 px-2">
-      {user == "すずきたくと" ? (
+      {user == opponentName ? (
         <div className="flex items-center">
           <Image
             src="/images/takt_icon.jpeg"

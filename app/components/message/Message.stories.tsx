@@ -1,6 +1,7 @@
 import Message from "./Message";
 import type { Meta, StoryObj } from "@storybook/react";
 import { MessageType } from "@/app/types";
+import { RecoilRoot } from "recoil";
 
 const meta = {
   title: "Message",
@@ -10,6 +11,7 @@ const meta = {
     user: { control: "text" },
     timestamp: { control: "number" },
   },
+  decorators: [(story) => <RecoilRoot>{story()}</RecoilRoot>],
 } satisfies Meta<typeof Message>;
 
 export default meta;

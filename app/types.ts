@@ -17,3 +17,9 @@ export type LogType = {
 export type HeaderType = {
   dates: string[];
 };
+
+export type Dates = {
+  [year: number]: {
+    [month: number]: number[];
+  };
+};

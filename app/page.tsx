@@ -1,22 +1,29 @@
 "use client";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Message from "./components/message/Message";
 import { ChangeEvent, use, useState } from "react";
-import Date from "./components/date/Date";
-import { LogType } from "./types";
-import { opponentState, logState } from "./atoms";
+import { LogType, Dates } from "./types";
+import { opponentState, logState, datesState } from "./atoms";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 
 export default function Home() {
   const router = useRouter();
 
-  const [isUploaded, setIsUploaded] = useState(false);
   const setOpponentName = useSetRecoilState(opponentState);
   const opponentName = useRecoilValue(opponentState);
   const setLog = useSetRecoilState(logState);
   const log = useRecoilValue(logState);
-  const [dates, setDates] = useState<string[]>([]);
+  const setDates = useSetRecoilState(datesState);
+
+  // dateを2023-08-20の形式に変換する
+  const parseDate = (date: string) => {
+    const dateArray = date.split("/");
+    dateArray[1] =
+      dateArray[1].length === 1 ? "0" + dateArray[1] : dateArray[1];
+    dateArray[2] = dateArray[2].split("(")[0];
+    dateArray[2] =
+      dateArray[2].length === 1 ? "0" + dateArray[2] : dateArray[2];
+    return dateArray.join("-");
+  };
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
@@ -32,13 +39,16 @@ export default function Home() {
   };
 
   const processFileContent = (content: string) => {
+    const dateStrings = []; // 日付の文字列を格納する配列("2023/08/20(日)"の形式)
+    setLog([]); // ログをリセット
+    setDates({}); // 日付をリセット
     // テキストを改行で分割して配列にする
     const lines = content.split(/\r?\n/);
     for (let i = 3; i < lines.length; i++) {
       // lines[i]が"2023/08/20(日)"の形式かどうかを判定する, 空白行は無視
       if (lines[i].match(/^\d{4}\/\d{2}\/\d{2}\(.+\)$/)) {
-        const date = lines[i];
-        setDates((prev) => [...prev, date]);
+        const date = parseDate(lines[i]);
+        dateStrings.push(date);
         setLog((prev) => [
           ...prev,
           {
@@ -77,6 +87,24 @@ export default function Home() {
         ]);
       }
     }
+
+    // 年のグループを作成、さらにその中で月のグループを作成、日付を格納(カレンダーで使うため)
+    setDates(
+      dateStrings.reduce((acc: Dates, date) => {
+        const [yearString, monthString, dayString] = date.split("-");
+        const year = Number(yearString);
+        const month = Number(monthString);
+        const day = Number(dayString);
+        if (!acc[year]) {
+          acc[year] = {};
+        }
+        if (!acc[year][month]) {
+          acc[year][month] = [];
+        }
+        acc[year][month].push(day);
+        return acc;
+      }, {})
+    );
   };
 
   const upLoad = () => {
