@@ -15,7 +15,7 @@ const Message = (props: MessageType) => {
       {user == opponentName ? (
         <div className="flex items-center">
           <Image
-            src="/images/takt_icon.jpeg"
+            src="/images/initial_icon.jpeg"
             alt="profile"
             width={230}
             height={230}
