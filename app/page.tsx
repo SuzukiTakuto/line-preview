@@ -140,7 +140,10 @@ export default function Home() {
       >
         生成
       </button>
-      <p className="mt-3">※スマホでの利用推奨</p>
+      <p className="mt-3 text-xs">
+        ※LINEのトーク画面で、「設定→トーク履歴を送信」でダウンロードできるテキストファイルを送ってもらい、使用してください。
+      </p>
+      <p className="mt-3 text-xs">※スマホでの利用推奨</p>
     </div>
   );
 }
