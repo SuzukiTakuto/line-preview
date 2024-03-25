@@ -133,7 +133,13 @@ export default function Home() {
         placeholder="相手の名前(正確に)"
         onChange={(e) => setOpponentName(e.target.value)}
       />
-      <button onClick={() => upLoad()}>生成</button>
+      <button
+        type="button"
+        onClick={() => upLoad()}
+        className="bg-blue-600 hover:bg-blue-500 text-white rounded px-4 py-1 ml-2"
+      >
+        生成
+      </button>
     </div>
   );
 }
