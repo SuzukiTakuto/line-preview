@@ -36,7 +36,7 @@ const CalenderWrapper = () => {
   };
 
   return (
-    <div>
+    <div className="w-60">
       <div className="flex justify-center pt-3">
         <button
           className="px-2"

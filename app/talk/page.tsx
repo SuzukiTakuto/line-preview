@@ -23,11 +23,6 @@ const TalkPage = () => {
   return (
     <>
       <div className="mt-16">
-        {isCalenderOpen && (
-          <div className="fixed top-11 right-0 flex justify-center bg-[#222] z-20">
-            <CalenderWrapper />
-          </div>
-        )}
         {log.map((log, index) => {
           if (log.type === "message") {
             return (
