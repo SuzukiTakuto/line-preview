@@ -140,6 +140,7 @@ export default function Home() {
       >
         生成
       </button>
+      <p className="mt-3">※スマホでの利用推奨</p>
     </div>
   );
 }
